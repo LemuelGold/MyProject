@@ -134,14 +134,34 @@
                         
                         <div class="row">
                             <div class="col-md-12">
-                                <label class="form-label">Name <span id="student-id-label" style="display: none;">and Student ID Number</span></label>
+                                <label class="form-label">Name <span id="student-id-label" style="display: none;">/ Student ID / Course / Year</span></label>
                                 <div id="name-fields">
-                                    <div class="row mb-2 name-row">
-                                        <div class="col-md-5">
+                                    <div class="row mb-2 name-row align-items-center">
+                                        <div class="col-md-3">
                                             <input type="text" class="form-control" name="names[]" placeholder="Name" required>
                                         </div>
-                                        <div class="col-md-5 student-id-col" style="display: none;">
+                                        <div class="col-md-3 student-id-col" style="display: none;">
                                             <input type="text" class="form-control" name="student_ids[]" placeholder="Student ID Number">
+                                        </div>
+                                        <div class="col-md-2 student-id-col" style="display: none;">
+                                            <select class="form-select" name="courses[]">
+                                                <option value="">Course</option>
+                                                <option value="BSIT">BSIT</option>
+                                                <option value="BSCS">BSCS</option>
+                                                <option value="BSED">BSED</option>
+                                                <option value="BEED">BEED</option>
+                                                <option value="BSA">BSA</option>
+                                                <option value="BSHM">BSHM</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-2 student-id-col" style="display: none;">
+                                            <select class="form-select" name="year_levels[]">
+                                                <option value="">Year</option>
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                            </select>
                                         </div>
                                         <div class="col-md-2">
                                             <button type="button" class="btn btn-outline-secondary w-100" onclick="addNameField()">+</button>
@@ -152,20 +172,6 @@
                         </div>
                         
                         <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="course_year" class="form-label">Course And Year</label>
-                                <select class="form-select" id="course_year" name="course_year" required>
-                                    <option value="" selected>Select</option>
-                                    <option value="BSIT 1">BSIT 1</option>
-                                    <option value="BSIT 2">BSIT 2</option>
-                                    <option value="BSIT 3">BSIT 3</option>
-                                    <option value="BSIT 4">BSIT 4</option>
-                                    <option value="BSCS 1">BSCS 1</option>
-                                    <option value="BSCS 2">BSCS 2</option>
-                                    <option value="BSCS 3">BSCS 3</option>
-                                    <option value="BSCS 4">BSCS 4</option>
-                                </select>
-                            </div>
                             <div class="col-md-6 mb-3">
                                 <label for="date_time" class="form-label">Date And Time</label>
                                 <input type="datetime-local" class="form-control" id="date_time" name="date_time" required>
@@ -241,24 +247,16 @@
             var userType = document.getElementById('user_type').value;
             var studentIdCols = document.querySelectorAll('.student-id-col');
             var studentIdLabel = document.getElementById('student-id-label');
-            var studentIdInputs = document.querySelectorAll('input[name="student_ids[]"]');
             
             if (userType === 'Students') {
                 studentIdLabel.style.display = 'inline';
-                studentIdCols.forEach(function(col) {
-                    col.style.display = 'block';
-                });
-                studentIdInputs.forEach(function(input) {
-                    input.required = true;
-                });
+                studentIdCols.forEach(col => col.style.display = 'block');
             } else {
                 studentIdLabel.style.display = 'none';
-                studentIdCols.forEach(function(col) {
+                studentIdCols.forEach(col => {
                     col.style.display = 'none';
-                });
-                studentIdInputs.forEach(function(input) {
-                    input.required = false;
-                    input.value = '';
+                    var inputs = col.querySelectorAll('input, select');
+                    inputs.forEach(input => { input.value = ''; input.required = false; });
                 });
             }
         }
@@ -266,17 +264,37 @@
         function addNameField() {
             var nameFields = document.getElementById('name-fields');
             var userType = document.getElementById('user_type').value;
-            var showStudentId = userType === 'Students' ? 'block' : 'none';
-            var studentIdRequired = userType === 'Students';
-            
+            var isStudent = userType === 'Students';
+            var show = isStudent ? 'block' : 'none';
+
             var newField = document.createElement('div');
-            newField.className = 'row mb-2 name-row';
+            newField.className = 'row mb-2 name-row align-items-center';
             newField.innerHTML = `
-                <div class="col-md-5">
+                <div class="col-md-3">
                     <input type="text" class="form-control" name="names[]" placeholder="Name" required>
                 </div>
-                <div class="col-md-5 student-id-col" style="display: ${showStudentId};">
-                    <input type="text" class="form-control" name="student_ids[]" placeholder="Student ID Number" ${studentIdRequired ? 'required' : ''}>
+                <div class="col-md-3 student-id-col" style="display: ${show};">
+                    <input type="text" class="form-control" name="student_ids[]" placeholder="Student ID Number" ${isStudent ? 'required' : ''}>
+                </div>
+                <div class="col-md-2 student-id-col" style="display: ${show};">
+                    <select class="form-select" name="courses[]" ${isStudent ? 'required' : ''}>
+                        <option value="">Course</option>
+                        <option value="BSIT">BSIT</option>
+                        <option value="BSCS">BSCS</option>
+                        <option value="BSED">BSED</option>
+                        <option value="BEED">BEED</option>
+                        <option value="BSA">BSA</option>
+                        <option value="BSHM">BSHM</option>
+                    </select>
+                </div>
+                <div class="col-md-2 student-id-col" style="display: ${show};">
+                    <select class="form-select" name="year_levels[]" ${isStudent ? 'required' : ''}>
+                        <option value="">Year</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                    </select>
                 </div>
                 <div class="col-md-2">
                     <button type="button" class="btn btn-outline-danger w-100" onclick="removeNameField(this)">-</button>

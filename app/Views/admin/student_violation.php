@@ -124,12 +124,32 @@
                             <div class="col-md-12">
                                 <label class="form-label">Name and Student ID Number</label>
                                 <div id="name-fields">
-                                    <div class="row mb-2 name-row">
-                                        <div class="col-md-5">
+                                    <div class="row mb-2 name-row align-items-center">
+                                        <div class="col-md-3">
                                             <input type="text" class="form-control" name="names[]" placeholder="Name" required>
                                         </div>
-                                        <div class="col-md-5">
+                                        <div class="col-md-3">
                                             <input type="text" class="form-control" name="student_ids[]" placeholder="Student ID Number" required>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <select class="form-select" name="courses[]" required>
+                                                <option value="">Course</option>
+                                                <option value="BSIT">BSIT</option>
+                                                <option value="BSCS">BSCS</option>
+                                                <option value="BSED">BSED</option>
+                                                <option value="BEED">BEED</option>
+                                                <option value="BSA">BSA</option>
+                                                <option value="BSHM">BSHM</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <select class="form-select" name="year_levels[]" required>
+                                                <option value="">Year</option>
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                            </select>
                                         </div>
                                         <div class="col-md-2">
                                             <button type="button" class="btn btn-outline-secondary w-100" onclick="addNameField()">+</button>
@@ -140,20 +160,6 @@
                         </div>
                         
                         <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="course_year" class="form-label">Course And Years    </label>
-                                <select class="form-select" id="course_year" name="course_year" required>
-                                    <option value="" selected>Select</option>
-                                    <option value="BSIT 1">BSIT 1</option>
-                                    <option value="BSIT 2">BSIT 2</option>
-                                    <option value="BSIT 3">BSIT 3</option>
-                                    <option value="BSIT 4">BSIT 4</option>
-                                    <option value="BSCS 1">BSCS 1</option>
-                                    <option value="BSCS 2">BSCS 2</option>
-                                    <option value="BSCS 3">BSCS 3</option>
-                                    <option value="BSCS 4">BSCS 4</option>
-                                </select>
-                            </div>
                             <div class="col-md-6 mb-3">
                                 <label for="date_time" class="form-label">Date And Time</label>
                                 <input type="datetime-local" class="form-control" id="date_time" name="date_time" required>
@@ -228,13 +234,33 @@
         function addNameField() {
             var nameFields = document.getElementById('name-fields');
             var newField = document.createElement('div');
-            newField.className = 'row mb-2 name-row';
+            newField.className = 'row mb-2 name-row align-items-center';
             newField.innerHTML = `
-                <div class="col-md-5">
+                <div class="col-md-3">
                     <input type="text" class="form-control" name="names[]" placeholder="Name" required>
                 </div>
-                <div class="col-md-5">
+                <div class="col-md-3">
                     <input type="text" class="form-control" name="student_ids[]" placeholder="Student ID Number" required>
+                </div>
+                <div class="col-md-2">
+                    <select class="form-select" name="courses[]" required>
+                        <option value="">Course</option>
+                        <option value="BSIT">BSIT</option>
+                        <option value="BSCS">BSCS</option>
+                        <option value="BSED">BSED</option>
+                        <option value="BEED">BEED</option>
+                        <option value="BSA">BSA</option>
+                        <option value="BSHM">BSHM</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <select class="form-select" name="year_levels[]" required>
+                        <option value="">Year</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                    </select>
                 </div>
                 <div class="col-md-2">
                     <button type="button" class="btn btn-outline-danger w-100" onclick="removeNameField(this)">-</button>
