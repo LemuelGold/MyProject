@@ -2,21 +2,50 @@
 
 namespace App\Controllers;
 
+use App\Models\UserModel;
+
 class Auth extends BaseController
 {
     public function login()
     {
+        if (session()->get('logged_in')) {
+            return redirect()->to(base_url('dashboard'));
+        }
         return view('auth/login');
     }
 
     public function authenticate()
     {
-        // TODO: Add authentication logic here
-        $email = $this->request->getPost('email');
-        $password = $this->request->getPost('password');
-        
-        // Placeholder for authentication - redirect to admin dashboard
-        return redirect()->to(base_url('admin'));
+        $identifier = $this->request->getPost('email');
+        $password   = $this->request->getPost('password');
+
+        $model = new UserModel();
+        $user  = $model->where('email', $identifier)
+                       ->orWhere('username', $identifier)
+                       ->first();
+
+        if (!$user || !password_verify($password, $user['password'])) {
+            return redirect()->back()->with('error', 'Invalid credentials.');
+        }
+
+        if ($user['status'] !== 'active') {
+            return redirect()->back()->with('error', 'Your account is inactive.');
+        }
+
+        session()->set([
+            'logged_in' => true,
+            'user_id'   => $user['id'],
+            'username'  => $user['username'],
+            'role'      => strtolower($user['role']),
+        ]);
+
+        return redirect()->to(base_url('dashboard'));
+    }
+
+    public function logout()
+    {
+        session()->destroy();
+        return redirect()->to(base_url('auth/login'));
     }
 
     public function register()

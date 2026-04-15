@@ -26,7 +26,7 @@ class UserSeeder extends Seeder
                 'password'   => password_hash('secretary123', PASSWORD_DEFAULT),
                 'first_name' => 'Secretary',
                 'last_name'  => 'User',
-                'role'       => 'Secretary',
+                'role'       => 'secretary',
                 'status'     => 'active',
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
