@@ -28,9 +28,7 @@
             padding: 0;
             margin: 0;
         }
-        .sidebar-menu li {
-            margin-bottom: 5px;
-        }
+        .sidebar-menu li { margin-bottom: 5px; }
         .sidebar-menu a {
             display: block;
             padding: 12px 20px;
@@ -44,9 +42,7 @@
             background-color: #f0f0f0;
             color: #333;
         }
-        .main-content {
-            padding: 30px;
-        }
+        .main-content { padding: 30px; }
         .page-title {
             font-size: 1.5rem;
             font-weight: 700;
@@ -93,9 +89,7 @@
             font-weight: 600;
             margin-top: 20px;
         }
-        .btn-submit:hover {
-            background-color: #555;
-        }
+        .btn-submit:hover { background-color: #555; }
     </style>
 </head>
 <body>
@@ -112,18 +106,28 @@
                     <li><a href="<?= base_url('auth/login') ?>" style="color: #999; margin-top: 20px;">Logout</a></li>
                 </ul>
             </div>
-            
+
             <div class="col-md-10 main-content">
                 <h1 class="page-title">Conferences</h1>
-                
+
                 <div class="form-container">
                     <form action="<?= base_url('admin/conferences/save') ?>" method="post">
                         <?= csrf_field() ?>
-                        
+
+                        <?php
+                        $db = \Config\Database::connect();
+                        $violations = $db->table('violations')->get()->getResultArray();
+                        $violationOptions = '';
+                        foreach ($violations as $v) {
+                            $violationOptions .= "<option value='{$v['id']}'>{$v['violation_name']}</option>";
+                        }
+                        ?>
+
+                        <!-- User Type -->
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <label class="form-label">Students and Faculty</label>
-                                <select class="form-select" id="user_type" name="user_type" required onchange="toggleStudentIdFields()">
+                                <select class="form-select" id="user_type" name="user_type" required onchange="toggleUserType()">
                                     <option value="" selected>Select</option>
                                     <option value="Students">Students</option>
                                     <option value="Faculty">Faculty</option>
@@ -131,53 +135,86 @@
                                 </select>
                             </div>
                         </div>
-                        
-                        <div class="row">
+
+                        <!-- Name fields container -->
+                        <div class="row mb-3">
                             <div class="col-md-12">
-                                <label class="form-label">Name <span id="student-id-label" style="display: none;">/ Student ID / Course / Year</span></label>
+                                <label class="form-label">Name</label>
                                 <div id="name-fields">
-                                    <div class="row mb-2 name-row align-items-center">
-                                        <div class="col-md-3">
-                                            <input type="text" class="form-control" name="names[]" placeholder="Name" required>
+
+                                    <!-- Student row (shown when Students selected) -->
+                                    <div class="student-row border rounded p-3 mb-3" id="student-rows" style="display: none;">
+                                        <div class="row mb-2 align-items-center">
+                                            <div class="col-md-3">
+                                                <input type="text" class="form-control" name="names[]" placeholder="Name">
+                                            </div>
+                                            <div class="col-md-3">
+                                                <input type="text" class="form-control" name="student_ids[]" placeholder="Student ID Number">
+                                            </div>
+                                            <div class="col-md-2">
+                                                <select class="form-select" name="courses[]">
+                                                    <option value="">Course</option>
+                                                    <option value="BSIT">BSIT</option>
+                                                    <option value="BSCS">BSCS</option>
+                                                    <option value="BSED">BSED</option>
+                                                    <option value="BEED">BEED</option>
+                                                    <option value="BSA">BSA</option>
+                                                    <option value="BSHM">BSHM</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <select class="form-select" name="year_levels[]">
+                                                    <option value="">Year</option>
+                                                    <option value="1">1st Year</option>
+                                                    <option value="2">2nd Year</option>
+                                                    <option value="3">3rd Year</option>
+                                                    <option value="4">4th Year</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <button type="button" class="btn btn-outline-secondary w-100" onclick="addStudentRow()">+</button>
+                                            </div>
                                         </div>
-                                        <div class="col-md-3 student-id-col" style="display: none;">
-                                            <input type="text" class="form-control" name="student_ids[]" placeholder="Student ID Number">
-                                        </div>
-                                        <div class="col-md-2 student-id-col" style="display: none;">
-                                            <select class="form-select" name="courses[]">
-                                                <option value="">Course</option>
-                                                <option value="BSIT">BSIT</option>
-                                                <option value="BSCS">BSCS</option>
-                                                <option value="BSED">BSED</option>
-                                                <option value="BEED">BEED</option>
-                                                <option value="BSA">BSA</option>
-                                                <option value="BSHM">BSHM</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-md-2 student-id-col" style="display: none;">
-                                            <select class="form-select" name="year_levels[]">
-                                                <option value="">Year</option>
-                                                <option value="1">1</option>
-                                                <option value="2">2</option>
-                                                <option value="3">3</option>
-                                                <option value="4">4</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <button type="button" class="btn btn-outline-secondary w-100" onclick="addNameField()">+</button>
+                                        <div class="row">
+                                            <div class="col-md-6 mb-2">
+                                                <select class="form-select" name="violation_ids[]">
+                                                    <option value="">Select Violation</option>
+                                                    <?php foreach ($violations as $v): ?>
+                                                        <option value="<?= $v['id'] ?>"><?= $v['violation_name'] ?></option>
+                                                    <?php endforeach; ?>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-6 mb-2">
+                                                <textarea class="form-control" name="descriptions[]" placeholder="Description (Optional)" rows="2"></textarea>
+                                            </div>
                                         </div>
                                     </div>
+
+                                    <!-- Faculty/Personnel row (shown when Faculty or Personnel selected) -->
+                                    <div id="faculty-rows" style="display: none;">
+                                        <div class="row mb-2 name-row align-items-center">
+                                            <div class="col-md-6">
+                                                <input type="text" class="form-control faculty-name" name="names[]" placeholder="Name">
+                                            </div>
+                                            <div class="col-md-2">
+                                                <button type="button" class="btn btn-outline-secondary w-100" onclick="addFacultyRow()">+</button>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
-                        
+
+                        <!-- Date and Time -->
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <label for="date_time" class="form-label">Date And Time</label>
                                 <input type="datetime-local" class="form-control" id="date_time" name="date_time" required>
                             </div>
                         </div>
-                        
+
+                        <!-- Semester and School Year -->
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <label for="semester" class="form-label">Semester</label>
@@ -200,38 +237,52 @@
                                 </select>
                             </div>
                         </div>
-                        
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="violation_id" class="form-label">Violation</label>
-                                <select class="form-select" id="violation_id" name="violation_id" required>
-                                    <option value="" selected>Select</option>
-                                    <?php
-                                    $db = \Config\Database::connect();
-                                    $violations = $db->table('violations')->get()->getResultArray();
-                                    foreach ($violations as $violation): ?>
-                                        <option value="<?= $violation['id'] ?>"><?= $violation['violation_name'] ?></option>
-                                    <?php endforeach; ?>
-                                </select>
+
+                        <!-- Shared Violation and Phases (Faculty/Personnel only) -->
+                        <div id="shared-violation-section">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Violation</label>
+                                    <select class="form-select" id="shared_violation_id" name="shared_violation_id">
+                                        <option value="" selected>Select</option>
+                                        <?php foreach ($violations as $v): ?>
+                                            <option value="<?= $v['id'] ?>"><?= $v['violation_name'] ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="phase" class="form-label">Phases</label>
+                                    <select class="form-select" id="phase" name="phase" required>
+                                        <option value="" selected>Select</option>
+                                        <option value="Phase 1">Phase 1</option>
+                                        <option value="Phase 2">Phase 2</option>
+                                        <option value="Phase 3">Phase 3</option>
+                                    </select>
+                                </div>
                             </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="phase" class="form-label">Phases</label>
-                                <select class="form-select" id="phase" name="phase" required>
-                                    <option value="" selected>Select</option>
-                                    <option value="Phase 1">Phase 1</option>
-                                    <option value="Phase 2">Phase 2</option>
-                                    <option value="Phase 3">Phase 3</option>
-                                </select>
+                            <div class="row">
+                                <div class="col-md-12 mb-3">
+                                    <label class="form-label">Description / Optional</label>
+                                    <textarea class="form-control" id="shared_description" name="shared_description" placeholder="Description" rows="4"></textarea>
+                                </div>
                             </div>
                         </div>
-                        
-                        <div class="row">
-                            <div class="col-md-12 mb-3">
-                                <label for="description" class="form-label">Description/ Optional</label>
-                                <textarea class="form-control" id="description" name="description" placeholder="Description" rows="4"></textarea>
+
+                        <!-- Phases only (Students) -->
+                        <div id="student-phase-section" style="display: none;">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="phase_student" class="form-label">Phases</label>
+                                    <select class="form-select" id="phase_student" name="phase">
+                                        <option value="" selected>Select</option>
+                                        <option value="Phase 1">Phase 1</option>
+                                        <option value="Phase 2">Phase 2</option>
+                                        <option value="Phase 3">Phase 3</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
-                        
+
                         <div class="text-center">
                             <button type="submit" class="btn btn-submit">Submit Conference</button>
                         </div>
@@ -243,69 +294,113 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        function toggleStudentIdFields() {
+        const violationOptions = `<?php foreach ($violations as $v): ?><option value="<?= $v['id'] ?>"><?= $v['violation_name'] ?></option><?php endforeach; ?>`;
+
+        function toggleUserType() {
             var userType = document.getElementById('user_type').value;
-            var studentIdCols = document.querySelectorAll('.student-id-col');
-            var studentIdLabel = document.getElementById('student-id-label');
-            
+            var studentRows   = document.getElementById('student-rows');
+            var facultyRows   = document.getElementById('faculty-rows');
+            var sharedSection = document.getElementById('shared-violation-section');
+            var studentPhase  = document.getElementById('student-phase-section');
+
             if (userType === 'Students') {
-                studentIdLabel.style.display = 'inline';
-                studentIdCols.forEach(col => col.style.display = 'block');
+                studentRows.style.display   = 'block';
+                facultyRows.style.display   = 'none';
+                sharedSection.style.display = 'none';
+                studentPhase.style.display  = 'block';
+            } else if (userType === 'Faculty' || userType === 'Personnel') {
+                studentRows.style.display   = 'none';
+                facultyRows.style.display   = 'block';
+                sharedSection.style.display = 'block';
+                studentPhase.style.display  = 'none';
             } else {
-                studentIdLabel.style.display = 'none';
-                studentIdCols.forEach(col => {
-                    col.style.display = 'none';
-                    var inputs = col.querySelectorAll('input, select');
-                    inputs.forEach(input => { input.value = ''; input.required = false; });
-                });
+                studentRows.style.display   = 'none';
+                facultyRows.style.display   = 'none';
+                sharedSection.style.display = 'block';
+                studentPhase.style.display  = 'none';
             }
         }
-        
-        function addNameField() {
-            var nameFields = document.getElementById('name-fields');
-            var userType = document.getElementById('user_type').value;
-            var isStudent = userType === 'Students';
-            var show = isStudent ? 'block' : 'none';
 
-            var newField = document.createElement('div');
-            newField.className = 'row mb-2 name-row align-items-center';
-            newField.innerHTML = `
-                <div class="col-md-3">
-                    <input type="text" class="form-control" name="names[]" placeholder="Name" required>
+        function addStudentRow() {
+            var nameFields = document.getElementById('name-fields');
+            var newRow = document.createElement('div');
+            newRow.className = 'student-row border rounded p-3 mb-3';
+            newRow.innerHTML = `
+                <div class="row mb-2 align-items-center">
+                    <div class="col-md-3">
+                        <input type="text" class="form-control" name="names[]" placeholder="Name" required>
+                    </div>
+                    <div class="col-md-3">
+                        <input type="text" class="form-control" name="student_ids[]" placeholder="Student ID Number" required>
+                    </div>
+                    <div class="col-md-2">
+                        <select class="form-select" name="courses[]" required>
+                            <option value="">Course</option>
+                            <option value="BSIT">BSIT</option>
+                            <option value="BSCS">BSCS</option>
+                            <option value="BSED">BSED</option>
+                            <option value="BEED">BEED</option>
+                            <option value="BSA">BSA</option>
+                            <option value="BSHM">BSHM</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <select class="form-select" name="year_levels[]" required>
+                            <option value="">Year</option>
+                            <option value="1">1st Year</option>
+                            <option value="2">2nd Year</option>
+                            <option value="3">3rd Year</option>
+                            <option value="4">4th Year</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <button type="button" class="btn btn-outline-danger w-100" onclick="removeStudentRow(this)">-</button>
+                    </div>
                 </div>
-                <div class="col-md-3 student-id-col" style="display: ${show};">
-                    <input type="text" class="form-control" name="student_ids[]" placeholder="Student ID Number" ${isStudent ? 'required' : ''}>
-                </div>
-                <div class="col-md-2 student-id-col" style="display: ${show};">
-                    <select class="form-select" name="courses[]" ${isStudent ? 'required' : ''}>
-                        <option value="">Course</option>
-                        <option value="BSIT">BSIT</option>
-                        <option value="BSCS">BSCS</option>
-                        <option value="BSED">BSED</option>
-                        <option value="BEED">BEED</option>
-                        <option value="BSA">BSA</option>
-                        <option value="BSHM">BSHM</option>
-                    </select>
-                </div>
-                <div class="col-md-2 student-id-col" style="display: ${show};">
-                    <select class="form-select" name="year_levels[]" ${isStudent ? 'required' : ''}>
-                        <option value="">Year</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                    </select>
-                </div>
-                <div class="col-md-2">
-                    <button type="button" class="btn btn-outline-danger w-100" onclick="removeNameField(this)">-</button>
+                <div class="row">
+                    <div class="col-md-6 mb-2">
+                        <select class="form-select" name="violation_ids[]" required>
+                            <option value="">Select Violation</option>
+                            ${violationOptions}
+                        </select>
+                    </div>
+                    <div class="col-md-6 mb-2">
+                        <textarea class="form-control" name="descriptions[]" placeholder="Description (Optional)" rows="2"></textarea>
+                    </div>
                 </div>
             `;
-            nameFields.appendChild(newField);
+            // Insert before the faculty-rows div
+            var facultyRows = document.getElementById('faculty-rows');
+            nameFields.insertBefore(newRow, facultyRows);
         }
-        
-        function removeNameField(button) {
+
+        function removeStudentRow(button) {
             var nameFields = document.getElementById('name-fields');
-            if (nameFields.children.length > 1) {
+            var rows = nameFields.querySelectorAll('.student-row');
+            if (rows.length > 1) {
+                button.closest('.student-row').remove();
+            }
+        }
+
+        function addFacultyRow() {
+            var facultyRows = document.getElementById('faculty-rows');
+            var newRow = document.createElement('div');
+            newRow.className = 'row mb-2 name-row align-items-center';
+            newRow.innerHTML = `
+                <div class="col-md-6">
+                    <input type="text" class="form-control faculty-name" name="names[]" placeholder="Name" required>
+                </div>
+                <div class="col-md-2">
+                    <button type="button" class="btn btn-outline-danger w-100" onclick="removeFacultyRow(this)">-</button>
+                </div>
+            `;
+            facultyRows.appendChild(newRow);
+        }
+
+        function removeFacultyRow(button) {
+            var facultyRows = document.getElementById('faculty-rows');
+            var rows = facultyRows.querySelectorAll('.name-row');
+            if (rows.length > 1) {
                 button.closest('.name-row').remove();
             }
         }

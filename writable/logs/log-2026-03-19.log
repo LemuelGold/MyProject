@@ -1,0 +1,134 @@
+ERROR - 2026-03-19 06:22:25 --> Table 'myprojectdb.violation_records' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 300.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(300): mysqli->query('SELECT `vr`.*, `v`.`violation_name`
+FROM `violation_records` `vr`
+LEFT JOIN `violations` `v` ON `v`.`id` = `vr`.`violation_id`
+ORDER BY `vr`.`created_at` DESC', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(769): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `vr`.*, `v`.`violation_name`
+FROM `violation_records` `vr`
+LEFT JOIN `violations` `v` ON `v`.`id` = `vr`.`violation_id`
+ORDER BY `vr`.`created_at` DESC')
+ 3 SYSTEMPATH\Database\BaseConnection.php(686): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `vr`.*, `v`.`violation_name`
+FROM `violation_records` `vr`
+LEFT JOIN `violations` `v` ON `v`.`id` = `vr`.`violation_id`
+ORDER BY `vr`.`created_at` DESC')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `vr`.*, `v`.`violation_name`
+FROM `violation_records` `vr`
+LEFT JOIN `violations` `v` ON `v`.`id` = `vr`.`violation_id`
+ORDER BY `vr`.`created_at` DESC', [], false)
+ 5 APPPATH\Controllers\Admin.php(71): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\CodeIgniter.php(951): App\Controllers\Admin->violationRecords()
+ 7 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin))
+ 8 SYSTEMPATH\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(417): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(54): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-19 06:22:25 --> CodeIgniter\Database\Exceptions\DatabaseException: Table 'myprojectdb.violation_records' doesn't exist
+[Method: GET, Route: admin/violation-records]
+in SYSTEMPATH\Database\BaseConnection.php on line 724.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `vr`.*, `v`.`violation_name`
+FROM `violation_records` `vr`
+LEFT JOIN `violations` `v` ON `v`.`id` = `vr`.`violation_id`
+ORDER BY `vr`.`created_at` DESC', [], false)
+ 2 APPPATH\Controllers\Admin.php(71): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\CodeIgniter.php(951): App\Controllers\Admin->violationRecords()
+ 4 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin))
+ 5 SYSTEMPATH\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 SYSTEMPATH\Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 7 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 8 FCPATH\index.php(54): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-19 06:22:25 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Table 'myprojectdb.violation_records' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 310.
+ 1 SYSTEMPATH\Database\BaseConnection.php(769): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `vr`.*, `v`.`violation_name`
+FROM `violation_records` `vr`
+LEFT JOIN `violations` `v` ON `v`.`id` = `vr`.`violation_id`
+ORDER BY `vr`.`created_at` DESC')
+ 2 SYSTEMPATH\Database\BaseConnection.php(686): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `vr`.*, `v`.`violation_name`
+FROM `violation_records` `vr`
+LEFT JOIN `violations` `v` ON `v`.`id` = `vr`.`violation_id`
+ORDER BY `vr`.`created_at` DESC')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `vr`.*, `v`.`violation_name`
+FROM `violation_records` `vr`
+LEFT JOIN `violations` `v` ON `v`.`id` = `vr`.`violation_id`
+ORDER BY `vr`.`created_at` DESC', [], false)
+ 4 APPPATH\Controllers\Admin.php(71): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\CodeIgniter.php(951): App\Controllers\Admin->violationRecords()
+ 6 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin))
+ 7 SYSTEMPATH\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(54): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-19 06:22:25 --> [Caused by] mysqli_sql_exception: Table 'myprojectdb.violation_records' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 300.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(300): mysqli->query('SELECT `vr`.*, `v`.`violation_name`
+FROM `violation_records` `vr`
+LEFT JOIN `violations` `v` ON `v`.`id` = `vr`.`violation_id`
+ORDER BY `vr`.`created_at` DESC', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(769): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `vr`.*, `v`.`violation_name`
+FROM `violation_records` `vr`
+LEFT JOIN `violations` `v` ON `v`.`id` = `vr`.`violation_id`
+ORDER BY `vr`.`created_at` DESC')
+ 3 SYSTEMPATH\Database\BaseConnection.php(686): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `vr`.*, `v`.`violation_name`
+FROM `violation_records` `vr`
+LEFT JOIN `violations` `v` ON `v`.`id` = `vr`.`violation_id`
+ORDER BY `vr`.`created_at` DESC')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `vr`.*, `v`.`violation_name`
+FROM `violation_records` `vr`
+LEFT JOIN `violations` `v` ON `v`.`id` = `vr`.`violation_id`
+ORDER BY `vr`.`created_at` DESC', [], false)
+ 5 APPPATH\Controllers\Admin.php(71): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\CodeIgniter.php(951): App\Controllers\Admin->violationRecords()
+ 7 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin))
+ 8 SYSTEMPATH\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(417): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(54): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ERROR - 2026-03-19 06:23:14 --> Table 'myprojectdb.violation_records' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 300.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(300): mysqli->query('INSERT INTO `violation_records` (`name`, `student_id`, `course`, `year_level`, `date_time`, `semester`, `school_year`, `violation_id`, `phase`, `description`, `created_at`, `updated_at`) VALUES (\'kakak\', \'23116001257\', \'BSIT\', \'2\', \'2026-03-19T14:22\', \'2nd Semester\', \'2025-2026\', \'1\', \'Phase 1\', \'Hand Gun\', \'2026-03-19 06:23:14\', \'2026-03-19 06:23:14\')', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(769): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `violation_records` (`name`, `student_id`, `course`, `year_level`, `date_time`, `semester`, `school_year`, `violation_id`, `phase`, `description`, `created_at`, `updated_at`) VALUES (\'kakak\', \'23116001257\', \'BSIT\', \'2\', \'2026-03-19T14:22\', \'2nd Semester\', \'2025-2026\', \'1\', \'Phase 1\', \'Hand Gun\', \'2026-03-19 06:23:14\', \'2026-03-19 06:23:14\')')
+ 3 SYSTEMPATH\Database\BaseConnection.php(686): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `violation_records` (`name`, `student_id`, `course`, `year_level`, `date_time`, `semester`, `school_year`, `violation_id`, `phase`, `description`, `created_at`, `updated_at`) VALUES (\'kakak\', \'23116001257\', \'BSIT\', \'2\', \'2026-03-19T14:22\', \'2nd Semester\', \'2025-2026\', \'1\', \'Phase 1\', \'Hand Gun\', \'2026-03-19 06:23:14\', \'2026-03-19 06:23:14\')')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(2345): CodeIgniter\Database\BaseConnection->query('INSERT INTO `violation_records` (`name`, `student_id`, `course`, `year_level`, `date_time`, `semester`, `school_year`, `violation_id`, `phase`, `description`, `created_at`, `updated_at`) VALUES (:name:, :student_id:, :course:, :year_level:, :date_time:, :semester:, :school_year:, :violation_id:, :phase:, :description:, :created_at:, :updated_at:)', [...], false)
+ 5 APPPATH\Controllers\Admin.php(45): CodeIgniter\Database\BaseBuilder->insert([...])
+ 6 SYSTEMPATH\CodeIgniter.php(951): App\Controllers\Admin->saveStudentViolation()
+ 7 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin))
+ 8 SYSTEMPATH\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(417): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(54): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-19 06:23:14 --> CodeIgniter\Database\Exceptions\DatabaseException: Table 'myprojectdb.violation_records' doesn't exist
+[Method: POST, Route: admin/student-violation/save]
+in SYSTEMPATH\Database\BaseConnection.php on line 724.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(2345): CodeIgniter\Database\BaseConnection->query('INSERT INTO `violation_records` (`name`, `student_id`, `course`, `year_level`, `date_time`, `semester`, `school_year`, `violation_id`, `phase`, `description`, `created_at`, `updated_at`) VALUES (:name:, :student_id:, :course:, :year_level:, :date_time:, :semester:, :school_year:, :violation_id:, :phase:, :description:, :created_at:, :updated_at:)', [...], false)
+ 2 APPPATH\Controllers\Admin.php(45): CodeIgniter\Database\BaseBuilder->insert([...])
+ 3 SYSTEMPATH\CodeIgniter.php(951): App\Controllers\Admin->saveStudentViolation()
+ 4 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin))
+ 5 SYSTEMPATH\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 SYSTEMPATH\Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 7 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 8 FCPATH\index.php(54): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-19 06:23:14 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Table 'myprojectdb.violation_records' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 310.
+ 1 SYSTEMPATH\Database\BaseConnection.php(769): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `violation_records` (`name`, `student_id`, `course`, `year_level`, `date_time`, `semester`, `school_year`, `violation_id`, `phase`, `description`, `created_at`, `updated_at`) VALUES (\'kakak\', \'23116001257\', \'BSIT\', \'2\', \'2026-03-19T14:22\', \'2nd Semester\', \'2025-2026\', \'1\', \'Phase 1\', \'Hand Gun\', \'2026-03-19 06:23:14\', \'2026-03-19 06:23:14\')')
+ 2 SYSTEMPATH\Database\BaseConnection.php(686): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `violation_records` (`name`, `student_id`, `course`, `year_level`, `date_time`, `semester`, `school_year`, `violation_id`, `phase`, `description`, `created_at`, `updated_at`) VALUES (\'kakak\', \'23116001257\', \'BSIT\', \'2\', \'2026-03-19T14:22\', \'2nd Semester\', \'2025-2026\', \'1\', \'Phase 1\', \'Hand Gun\', \'2026-03-19 06:23:14\', \'2026-03-19 06:23:14\')')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(2345): CodeIgniter\Database\BaseConnection->query('INSERT INTO `violation_records` (`name`, `student_id`, `course`, `year_level`, `date_time`, `semester`, `school_year`, `violation_id`, `phase`, `description`, `created_at`, `updated_at`) VALUES (:name:, :student_id:, :course:, :year_level:, :date_time:, :semester:, :school_year:, :violation_id:, :phase:, :description:, :created_at:, :updated_at:)', [...], false)
+ 4 APPPATH\Controllers\Admin.php(45): CodeIgniter\Database\BaseBuilder->insert([...])
+ 5 SYSTEMPATH\CodeIgniter.php(951): App\Controllers\Admin->saveStudentViolation()
+ 6 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin))
+ 7 SYSTEMPATH\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(54): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-03-19 06:23:14 --> [Caused by] mysqli_sql_exception: Table 'myprojectdb.violation_records' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 300.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(300): mysqli->query('INSERT INTO `violation_records` (`name`, `student_id`, `course`, `year_level`, `date_time`, `semester`, `school_year`, `violation_id`, `phase`, `description`, `created_at`, `updated_at`) VALUES (\'kakak\', \'23116001257\', \'BSIT\', \'2\', \'2026-03-19T14:22\', \'2nd Semester\', \'2025-2026\', \'1\', \'Phase 1\', \'Hand Gun\', \'2026-03-19 06:23:14\', \'2026-03-19 06:23:14\')', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(769): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `violation_records` (`name`, `student_id`, `course`, `year_level`, `date_time`, `semester`, `school_year`, `violation_id`, `phase`, `description`, `created_at`, `updated_at`) VALUES (\'kakak\', \'23116001257\', \'BSIT\', \'2\', \'2026-03-19T14:22\', \'2nd Semester\', \'2025-2026\', \'1\', \'Phase 1\', \'Hand Gun\', \'2026-03-19 06:23:14\', \'2026-03-19 06:23:14\')')
+ 3 SYSTEMPATH\Database\BaseConnection.php(686): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `violation_records` (`name`, `student_id`, `course`, `year_level`, `date_time`, `semester`, `school_year`, `violation_id`, `phase`, `description`, `created_at`, `updated_at`) VALUES (\'kakak\', \'23116001257\', \'BSIT\', \'2\', \'2026-03-19T14:22\', \'2nd Semester\', \'2025-2026\', \'1\', \'Phase 1\', \'Hand Gun\', \'2026-03-19 06:23:14\', \'2026-03-19 06:23:14\')')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(2345): CodeIgniter\Database\BaseConnection->query('INSERT INTO `violation_records` (`name`, `student_id`, `course`, `year_level`, `date_time`, `semester`, `school_year`, `violation_id`, `phase`, `description`, `created_at`, `updated_at`) VALUES (:name:, :student_id:, :course:, :year_level:, :date_time:, :semester:, :school_year:, :violation_id:, :phase:, :description:, :created_at:, :updated_at:)', [...], false)
+ 5 APPPATH\Controllers\Admin.php(45): CodeIgniter\Database\BaseBuilder->insert([...])
+ 6 SYSTEMPATH\CodeIgniter.php(951): App\Controllers\Admin->saveStudentViolation()
+ 7 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin))
+ 8 SYSTEMPATH\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(417): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(54): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
