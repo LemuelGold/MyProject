@@ -59,7 +59,7 @@
             </div>
 
             <?php
-            $role   = strtolower(session('role') ?? 'admin');
+            $role   = strtolower(session('user_role') ?? 'admin');
             $prefix = $role === 'secretary' ? 'secretary' : 'admin';
             $db = \Config\Database::connect();
             $violations = $db->table('violations')->get()->getResultArray();
@@ -257,3 +257,4 @@
 </script>
 </body>
 </html>
+

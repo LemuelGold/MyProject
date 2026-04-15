@@ -16,10 +16,10 @@
 </head>
 <body>
 <?php
-$role   = strtolower(session('role') ?? 'admin');
+$role   = strtolower(session('user_role') ?? 'admin');
 $prefix = $role === 'secretary' ? 'secretary' : 'admin';
 $label  = $role === 'secretary' ? 'Secretary' : 'Admin';
-if (!session('logged_in')) { $role = 'admin'; $prefix = 'admin'; $label = 'Admin'; }
+if (!session('isLoggedIn')) { $role = 'admin'; $prefix = 'admin'; $label = 'Admin'; }
 ?>
 <div class="container-fluid">
     <div class="row g-0">
@@ -90,3 +90,4 @@ if (!session('logged_in')) { $role = 'admin'; $prefix = 'admin'; $label = 'Admin
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+

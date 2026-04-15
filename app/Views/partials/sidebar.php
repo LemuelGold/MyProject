@@ -1,5 +1,5 @@
 <?php
-$role   = strtolower(session('role') ?? 'admin');
+$role   = strtolower(session('user_role') ?? 'admin');
 $prefix = $role === 'secretary' ? 'secretary' : 'admin';
 $label  = $role === 'secretary' ? 'Secretary' : 'Admin';
 $active = $active ?? '';
@@ -18,3 +18,4 @@ $active = $active ?? '';
         <li><a href="<?= base_url('auth/logout') ?>" class="text-secondary mt-3 d-block">Logout</a></li>
     </ul>
 </div>
+

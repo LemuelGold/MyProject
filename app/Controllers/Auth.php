@@ -8,7 +8,7 @@ class Auth extends BaseController
 {
     public function login()
     {
-        if (session()->get('logged_in')) {
+        if (session()->get('isLoggedIn')) {
             return redirect()->to(base_url('dashboard'));
         }
         return view('auth/login');
@@ -33,10 +33,10 @@ class Auth extends BaseController
         }
 
         session()->set([
-            'logged_in' => true,
-            'user_id'   => $user['id'],
-            'username'  => $user['username'],
-            'role'      => strtolower($user['role']),
+            'isLoggedIn' => true,
+            'user_id'    => $user['id'],
+            'user_name'  => $user['username'],
+            'user_role'  => strtolower($user['role']),
         ]);
 
         return redirect()->to(base_url('dashboard'));
